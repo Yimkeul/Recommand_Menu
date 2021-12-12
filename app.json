@@ -1,0 +1,11 @@
+{
+  "expo": {
+    "name": "Recommand_Menu",
+    "slug": "Recommand_Menu",
+    "version": "1.0.0",
+    "assetBundlePatterns": [
+      "**/*"
+    ]
+  },
+  "name": "Recommand_Menu"
+}
