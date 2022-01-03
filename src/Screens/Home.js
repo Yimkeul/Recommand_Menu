@@ -23,7 +23,6 @@ import {firebase_db} from '../firebaseConfig'
 import * as Application from 'expo-application';
 const isIOS = Platform.OS === 'ios';
 
-const sample_data = Data.tip;
 
 const wait = (timeout) => {
   return new Promise((resolve) => setTimeout(resolve, timeout));
@@ -36,32 +35,16 @@ const Home = ({ navigation, route }) => {
   LogBox.ignoreLogs(["Warning: ..."]);
   LogBox.ignoreLogs(["Setting a timer"]);
 
-
-  const [ready, setReady] = useState(false); //폰트용
-
-  const[readydata,setReadydata] = useState(false)
-
   const [refreshing, setRefreshing] = useState(false); //새로고침용
-
-  const [sm_data, setSm_data] = useState([]); //데이터 샘플용 나중에 삭제
 
   const [state,setState ] = useState([]); //firebase에서 데이터 저장
 
   useEffect(() => {
-    //헤더의 타이틀 변경
-    // console.log(`높이 : ${_HEIGHT}`)
-    // console.log(`너비 : ${_WEIGHT}`)
-    // setSm_data(Data)
-    getFont();
-    // console.log(sample_data)
+  
     firebase_db.ref('/tip').once('value').then((snapshot) => {
       console.log("파이어베이스에서 데이터 가져왔습니다!!")
       let tip = snapshot.val();
-      setState(tip)
-      // console.log(state[0])
-      setReadydata(true)
-      // setCateState(tip)
-
+      setState(tip) 
     });
   }, []);
 
@@ -71,14 +54,6 @@ const Home = ({ navigation, route }) => {
     setRefreshing(true);
     wait(2000).then(() => setRefreshing(false));
   }, []);
-
-  const getFont = async () => {
-    await Font.loadAsync({
-      SongMyung: require("../assets/fonts/SongMyung-Regular.ttf"),
-      PlayfairDisplay: require("../assets/fonts/PlayfairDisplay-Italic.ttf"),
-    });
-    setReady(true);
-  };
 
   const I_LIKE = async() => {
     
@@ -94,21 +69,16 @@ const Home = ({ navigation, route }) => {
       //tip.idx 이부분에서 tip은 useState로 저장을 해야하는데 저장해야하는 데이터는
       //날씨 + 기온 받아서 랜덤으로 뽑은 데이터를 저장한 훅이다.
       //이건 로직 짜야함
-      firebase_db.ref('/like/'+userUniqueId+'/'+ sample_data[1].idx).set(sample_data[1],function(error){
+      firebase_db.ref('/like/'+userUniqueId+'/'+ state[2].idx).set(state[2],function(error){
         console.log(error)
+        console.log(state[2])
         Alert.alert("홈화면에서 저장!")
     });
   };
 
-  return !(ready&&readydata) ? (
-    <View style={styles.container}>
-      <Text>{ready}</Text>
-    </View>
-  ) : (
+  return  (
     <SafeAreaView style={{ backgroundColor: "rgb(224,212,191)", flex: 1 }}>
       <ScrollView
-        style={{}}
-        contentContainerStyle={styles.scrollView}
         refreshControl={
           <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
         }
@@ -147,7 +117,7 @@ const Home = ({ navigation, route }) => {
           <TouchableOpacity
             id="recipe_btn"
             style={styles.recipe_btn}
-            onPress={() => navigation.navigate("Details",{idx : sample_data[1].idx})}
+            onPress={() => navigation.navigate("Details",{idx : state[2].idx})}
           >
             <AntDesign name="star" size={20} style={styles.icons} />
             <Text style={styles.recipe_text}>{` 레시피`}</Text>
@@ -172,7 +142,7 @@ const Home = ({ navigation, route }) => {
 
         <View>
           <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
-            {sample_data.map((content, i) => {
+            {state.map((content, i) => {
               return (
                 <Home_card content={content} key={i} navigation={navigation}/>
               );
@@ -258,7 +228,7 @@ const styles = StyleSheet.create({
   image_title: {
     fontSize: 30,
     textAlign: "center",
-    fontFamily: "SongMyung",
+    fontFamily: "SongMyung_400Regular",
   },
   image_space: {
     height: "80%",

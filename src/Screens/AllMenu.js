@@ -12,36 +12,24 @@ import {
   RefreshControl,
   SafeAreaView,
   StatusBar,
-
 } from "react-native";
 
 import Data from "../../data.json";
 import Card from "../components/Card";
 
-export default function AllMenu({navigation, route}) {
-
+export default function AllMenu({ navigation, route }) {
   LogBox.ignoreLogs(["Warning: ..."]);
-  LogBox.ignoreLogs(["Setting a timer"]);  
+  LogBox.ignoreLogs(["Setting a timer"]);
 
   const [state, setState] = useState([]); //전체 데이터 복사용
   const [category, setCategory] = useState([]);
 
-  
-
-  const [ready, setReady] = useState(true)
-
-
+  const [ready, setReady] = useState(true);
 
   useEffect(() => {
     setState(Data.tip);
     setCategory(Data.tip);
-
-
-    
   }, []);
-
-  
- 
 
   const con_category = (cate) => {
     if (cate == "전체보기") {
@@ -54,79 +42,74 @@ export default function AllMenu({navigation, route}) {
         })
       );
     }
-    // setCategory(
-    //   state.filter((d) => {
-    //     return d.category == cate;
-    //   })
-    // );
   };
- 
+
   return (
-    <SafeAreaView>
+    <SafeAreaView style={{ backgroundColor: "rgb(224,212,191)", flex: 1 }}>
+      
+      {/* 전체 스크롤 */}
       <ScrollView>
-      <StatusBar />
+        {/* 안드로이드용 */}
+        <StatusBar barStyle="dark-content" backgroundColor={"white"} />
 
-      <ScrollView
-        style={styles.middleContainer}
-        horizontal
-        indicatorStyle={"white"}
-        showsHorizontalScrollIndicator={false}
-      >
-        <TouchableOpacity
-          style={styles.middleButton01}
-          onPress={() => {
-            con_category("전체보기");
-          }}
+
+        {/* 메뉴 스크롤 */}
+        <ScrollView
+          style={styles.middleContainer}
+          horizontal
+          indicatorStyle={"white"}
+          showsHorizontalScrollIndicator={false}
         >
-          <Text style={styles.middleButtonText}>전체보기</Text>
-        </TouchableOpacity>
+          <TouchableOpacity
+            style={styles.middleButton01}
+            onPress={() => {
+              con_category("전체보기");
+            }}
+          >
+            <Text style={styles.middleButtonText}>전체보기</Text>
+          </TouchableOpacity>
 
-        <TouchableOpacity
-          style={styles.middleButton01}
-          onPress={() => {
-            con_category("생활");
-          }}
-        >
-          <Text style={styles.middleButtonText}>생활</Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={styles.middleButton01}
-          onPress={() => {
-            con_category("생활");
-          }}
-        >
-          <Text style={styles.middleButtonText}>생활</Text>
-        </TouchableOpacity>
+          <TouchableOpacity
+            style={styles.middleButton01}
+            onPress={() => {
+              con_category("생활");
+            }}
+          >
+            <Text style={styles.middleButtonText}>생활</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={styles.middleButton01}
+            onPress={() => {
+              con_category("생활");
+            }}
+          >
+            <Text style={styles.middleButtonText}>생활</Text>
+          </TouchableOpacity>
 
-        <TouchableOpacity
-          style={styles.middleButton02}
-          onPress={() => {
-            con_category("재테크");
-          }}
-        >
-          <Text style={styles.middleButtonText}>재테크</Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={styles.middleButton03}
-          onPress={() => {
-            con_category("반려견");
-          }}
-        >
-          <Text style={styles.middleButtonText}>반려견</Text>
-        </TouchableOpacity>
-      </ScrollView>
+          <TouchableOpacity
+            style={styles.middleButton02}
+            onPress={() => {
+              con_category("재테크");
+            }}
+          >
+            <Text style={styles.middleButtonText}>재테크</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={styles.middleButton03}
+            onPress={() => {
+              con_category("반려견");
+            }}
+          >
+            <Text style={styles.middleButtonText}>반려견</Text>
+          </TouchableOpacity>
+        </ScrollView>
 
-
-
-
-      <View style={styles.cardContainer}>
-        {/* 하나의 카드 영역을 나타내는 View */}
-        {category.map((content, i) => {
-          return <Card content={content} key={i} navigation={navigation} />;
-        })}
-      </View>
-
-
+        <View style={styles.cardContainer}>
+          {/* 하나의 카드 영역을 나타내는 View */}
+          {category.map((content, i) => {
+            return <Card content={content} key={i} navigation={navigation} />;
+          })}
+        </View>
       </ScrollView>
     </SafeAreaView>
   );
