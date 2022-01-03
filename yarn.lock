@@ -1057,6 +1057,11 @@
   dependencies:
     "@types/hammerjs" "^2.0.36"
 
+"@expo-google-fonts/jua@^0.2.0":
+  version "0.2.0"
+  resolved "https://registry.yarnpkg.com/@expo-google-fonts/jua/-/jua-0.2.0.tgz#2bfbfb1d2fc284df1766c50348db9e94b779840b"
+  integrity sha512-ZUbaBPNyB2ENJtXfEZ0JQ4JXuG+BdhLsMlZ9asDU2iZ6F4Ybcr7W99AdoLvUodUVXYDbvSy/jw2Kwbe40O0bFQ==
+
 "@expo-google-fonts/playfair-display@^0.2.0":
   version "0.2.0"
   resolved "https://registry.yarnpkg.com/@expo-google-fonts/playfair-display/-/playfair-display-0.2.0.tgz#d7d1985679f193fd35ee967ae2f1886ffe8b9153"

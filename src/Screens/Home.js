@@ -65,8 +65,19 @@ const Home = ({ navigation, route }) => {
     // console.log(state.length)
   }, [weather.condition]);
 
-  const [cate,setCate] = useState([])
-
+  const [cate,setCate] = useState([
+    {
+      idx:0,
+      category:"",
+      title:"",
+      image: "",
+      desc:"",
+      date:"",
+      weather : ""
+    }
+  ]
+  )
+  const [random, setRandom ] = useState(0)
   const test = () => {
     firebase_db
       .ref("/tip")
@@ -77,21 +88,27 @@ const Home = ({ navigation, route }) => {
         getLocation();
         setState(tip);
       });
-      console.log(state)
+      // console.log(cate)
     if (weather.condition == "구름") {
       setCate(
         state.filter((d) => {
           return d.weather == "구름";
         })
       );
-    }else     if (weather.condition == "맑음") {
+    }else if (weather.condition == "맑음") {
       setCate(
         state.filter((d) => {
           return d.weather == "맑음";
         })
       );
     }
+    let min = 0
+    let max = cate.length
+    let rn = Math.floor(Math.random() * (max - min)) + min
+    console.log(`랜덤 숫자는 ${rn}`)
+    setRandom(rn)
   };
+
 
   //날씨 정보 가져오기
   const getLocation = async () => {
@@ -137,7 +154,7 @@ const Home = ({ navigation, route }) => {
   //새로고침
   const onRefresh = useCallback(() => {
     setRefreshing(true);
-    wait(2000).then(() => getLocation(), setRefreshing(false));
+    wait(2000).then(() => getLocation(),test(), setRefreshing(false));
   }, []);
 
   //좋아요 함수
@@ -155,10 +172,10 @@ const Home = ({ navigation, route }) => {
     //날씨 + 기온 받아서 랜덤으로 뽑은 데이터를 저장한 훅이다.
     //이건 로직 짜야함
     firebase_db
-      .ref("/like/" + userUniqueId + "/" + state[2].idx)
-      .set(state[2], function (error) {
+      .ref("/like/" + userUniqueId + "/" + cate[random].idx)
+      .set(cate[random], function (error) {
         console.log(error);
-        console.log(state[2]);
+        console.log(cate[random]);
         Alert.alert("홈화면에서 저장!");
       });
   };
@@ -183,20 +200,16 @@ const Home = ({ navigation, route }) => {
           <View id="recommand_menu_card2" style={styles.recoomand_menu_card2}>
             <View id="image_title_space" style={styles.image_title_space}>
               <Text id="image_title" style={styles.image_title}>
-                {/* Title */}
-                {cate.length}
+                {cate[random].title}
               </Text>
-
             </View>
             <View
               id="image_space"
-              style={{
-                ...styles.image_space,
-                justifyContent: "center",
-                alignItems: "center",
-              }}
+              style={
+                styles.image_space
+              }
             >
-              <Text>이미지</Text>
+              <Image style={{width:'100%', height:'100%'}} source={{uri:cate[random].image}}/>
             </View>
           </View>
         </View>
@@ -207,7 +220,7 @@ const Home = ({ navigation, route }) => {
             id="recipe_btn"
             style={styles.recipe_btn}
             onPress={() =>
-              navigation.navigate("Details", { idx: state[2].idx })
+              navigation.navigate("Details", { idx: cate[random].idx })
             }
           >
             <AntDesign name="star" size={20} style={styles.icons} />
@@ -316,9 +329,9 @@ const styles = StyleSheet.create({
     borderBottomColor: "red",
   },
   image_title: {
-    fontSize: 30,
+    fontSize: 25,
     textAlign: "center",
-    fontFamily: "SongMyung_400Regular",
+    fontFamily: "Jua_400Regular",
   },
   image_space: {
     height: "80%",

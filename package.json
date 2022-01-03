@@ -9,6 +9,7 @@
     "start": "react-native start"
   },
   "dependencies": {
+    "@expo-google-fonts/jua": "^0.2.0",
     "@expo-google-fonts/playfair-display": "^0.2.0",
     "@expo-google-fonts/song-myung": "^0.2.0",
     "@react-navigation/bottom-tabs": "^6.0.9",

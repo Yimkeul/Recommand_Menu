@@ -6,31 +6,33 @@ import {
   Alert,
   StyleSheet,
   Pressable,
-  LogBox
+  LogBox,
 } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import { Home, Details, Like, AllMenu } from "../Screens";
-import {useFonts} from 'expo-font'
+import { useFonts } from "expo-font";
 import { AntDesign } from "@expo/vector-icons";
 import AppLoading from "expo-app-loading";
-import {  SongMyung_400Regular } from '@expo-google-fonts/song-myung'
-import { PlayfairDisplay_400Regular_Italic,} from '@expo-google-fonts/playfair-display'
-
+import { SongMyung_400Regular } from "@expo-google-fonts/song-myung";
+import { PlayfairDisplay_400Regular_Italic } from "@expo-google-fonts/playfair-display";
+import { Jua_400Regular } from "@expo-google-fonts/jua";
 const Stack = createStackNavigator();
 // navigation.navigate('Like')
 const Navigate = () => {
   LogBox.ignoreLogs(["Warning: ..."]);
-  LogBox.ignoreLogs(["Setting a timer"]);  
+  LogBox.ignoreLogs(["Setting a timer"]);
+  LogBox.ignoreLogs(["source.uri"]);
 
-  const [fontsLoaded,error] = useFonts({
+  const [fontsLoaded, error] = useFonts({
     PlayfairDisplay_400Regular_Italic,
-    SongMyung_400Regular
-  })
-  if(!fontsLoaded){
-    return <AppLoading/>
+    SongMyung_400Regular,
+    Jua_400Regular
+  });
+  if (!fontsLoaded) {
+    return <AppLoading />;
   }
-  return   (
+  return (
     <NavigationContainer>
       <Stack.Navigator
         initialRouteName="Home"
@@ -69,18 +71,20 @@ const Navigate = () => {
           })}
         />
 
-
-        <Stack.Screen name="Like" component={Like}   options={({ navigation }) => ({
-           headerRight: () => (
-            <TouchableOpacity
-              style={{ paddingHorizontal: 20 }}
-              onPress={()=>navigation.goBack()}
-            >
-              <AntDesign name="heart" size={30} color="rgb(169,63,54)" />
-            </TouchableOpacity>
-          ), 
-           
-          })}/>
+        <Stack.Screen
+          name="Like"
+          component={Like}
+          options={({ navigation }) => ({
+            headerRight: () => (
+              <TouchableOpacity
+                style={{ paddingHorizontal: 20 }}
+                onPress={() => navigation.goBack()}
+              >
+                <AntDesign name="heart" size={30} color="rgb(169,63,54)" />
+              </TouchableOpacity>
+            ),
+          })}
+        />
         <Stack.Screen
           name="Details"
           component={Details}
