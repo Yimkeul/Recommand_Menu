@@ -15,12 +15,12 @@ import {
 } from "react-native";
 import { AntDesign } from "@expo/vector-icons";
 import { Entypo } from "@expo/vector-icons";
-import * as Font from "expo-font";
-import Data from "../../data.json";
 import Home_card from "../components/Home_card";
 import axios from "axios"
 import {firebase_db} from '../firebaseConfig'
 import * as Application from 'expo-application';
+import * as Location from "expo-location";
+
 const isIOS = Platform.OS === 'ios';
 
 
@@ -38,23 +38,86 @@ const Home = ({ navigation, route }) => {
   const [refreshing, setRefreshing] = useState(false); //새로고침용
 
   const [state,setState ] = useState([]); //firebase에서 데이터 저장
+  
+  const [weather, setWeather] = useState({temp: 0,condition: ""}); //날씨 저장
+
+  const [ready,setReady] = useState(true)//대기
 
   useEffect(() => {
-  
+    getLocation()
     firebase_db.ref('/tip').once('value').then((snapshot) => {
       console.log("파이어베이스에서 데이터 가져왔습니다!!")
       let tip = snapshot.val();
       setState(tip) 
     });
+    console.log(weather)
+    setReady(false)
+    
   }, []);
 
 
+  //날씨 정보 가져오기
+  const getLocation = async () => {
+    //수많은 로직중에 에러가 발생하면
+    //해당 에러를 포착하여 로직을 멈추고,에러를 해결하기 위한 catch 영역 로직이 실행
+    try {
+      await Location.requestForegroundPermissionsAsync();
+      const locationData = await Location.getCurrentPositionAsync();
+      const latitude = locationData.coords.latitude;
+      const longitude = locationData.coords.longitude;
+      const API_KEY = "62a3e1c15a974cb7212dd251dddb4fa7";
+      const result = await axios.get(
+        `https://api.openweathermap.org/data/2.5/onecall?lat=${latitude}&lon=${longitude}&exclude=alerts&appid=${API_KEY}&units=metric`
+      );
 
+      const weather = result.data.current.weather[0].main;
+      const temp = result.data.current.temp;
+     
+      if(weather ==='Drizzle' || weather === 'Rain' || weather ==='Thunderstorm'){
+        setWeather({ temp,  condition:'비'});
+      }else if (weather === 'Snow'){
+        setWeather({ temp,  condition:'눈'});
+      }else if(weather === 'Clear'){
+        setWeather({ temp,  condition:'맑음'});
+      }else if(weather === 'Clouds'){
+        setWeather({ temp, condition:'구름'});
+      }else{
+        setWeather({ temp,  condition:'알수없음'});
+      }
+  
+    } catch (error) {
+      //혹시나 위치를 못가져올 경우를 대비해서, 안내를 준비합니다
+      Alert.alert("위치를 찾을 수가 없습니다.", "앱을 껏다 켜볼까요?");
+      getLocation()
+      // console.log(error)
+    }
+  };
+  
+  // const getLocation = async () => {
+  //   //수많은 로직중에 에러가 발생하면
+  //   //해당 에러를 포착하여 로직을 멈추고,에러를 해결하기 위한 catch 영역 로직이 실행
+  //   try {
+  //     //자바스크립트 함수의 실행순서를 고정하기 위해 쓰는 async,await
+  //     await Location.requestForegroundPermissionsAsync();
+  //     const locationData= await Location.getCurrentPositionAsync();
+  //     console.log(locationData)
+
+  //   } catch (error) {
+  //     //혹시나 위치를 못가져올 경우를 대비해서, 안내를 준비합니다
+  //     console.log(error)
+  //     Alert.alert("위치를 찾을 수가 없습니다.", "앱을 껏다 켜볼까요?");
+  //   }
+  // }
+
+
+  //새로고침
   const onRefresh = useCallback(() => {
     setRefreshing(true);
     wait(2000).then(() => setRefreshing(false));
   }, []);
 
+
+  //좋아요 함수
   const I_LIKE = async() => {
     
     let userUniqueId
@@ -76,7 +139,7 @@ const Home = ({ navigation, route }) => {
     });
   };
 
-  return  (
+  return ready? <View style ={{backgroundColor: "rgb(224,212,191)"}}></View> : (
     <SafeAreaView style={{ backgroundColor: "rgb(224,212,191)", flex: 1 }}>
       <ScrollView
         refreshControl={
