@@ -20,9 +20,11 @@ import { Jua_400Regular } from "@expo-google-fonts/jua";
 const Stack = createStackNavigator();
 // navigation.navigate('Like')
 const Navigate = () => {
-  LogBox.ignoreLogs(["Warning: ..."]);
-  LogBox.ignoreLogs(["Setting a timer"]);
-  LogBox.ignoreLogs(["source.uri"]);
+  // LogBox.ignoreLogs(["Warning: ..."]);
+  // LogBox.ignoreLogs(["Setting a timer"]);
+  // LogBox.ignoreLogs(["source.uri"]);
+  // LogBox.ignoreLogs(["[Unhandled promise"]);
+  LogBox.ignoreAllLogs();
 
   const [fontsLoaded, error] = useFonts({
     PlayfairDisplay_400Regular_Italic,
@@ -58,8 +60,8 @@ const Navigate = () => {
           name="Home"
           component={Home}
           options={({ navigation }) => ({
-            title: "MENU",
-
+            title: "──⋅( Menu )⋅──",
+            
             headerRight: () => (
               <TouchableOpacity
                 onPress={() => navigation.navigate("Like")}
@@ -75,6 +77,7 @@ const Navigate = () => {
           name="Like"
           component={Like}
           options={({ navigation }) => ({
+            title : "──⋅( Like )⋅──",
             headerRight: () => (
               <TouchableOpacity
                 style={{ paddingHorizontal: 20 }}
@@ -88,15 +91,24 @@ const Navigate = () => {
         <Stack.Screen
           name="Details"
           component={Details}
-          options={{
-            title: "Recipe",
-          }}
+          options={({ navigation }) => ({
+            title: "──⋅( Recipe )⋅──",
+
+            headerRight: () => (
+              <TouchableOpacity
+                onPress={() => navigation.navigate("Like")}
+                style={{ paddingHorizontal: 20 }}
+              >
+                <AntDesign name="hearto" size={30} color="rgb(169,63,54)" />
+              </TouchableOpacity>
+            ),
+          })}
         />
         <Stack.Screen
           name="AllMenu"
           component={AllMenu}
           options={({ navigation }) => ({
-            title: "All Menu",
+            title: "──⋅( All Menu )⋅──",
 
             headerRight: () => (
               <TouchableOpacity

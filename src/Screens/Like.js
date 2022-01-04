@@ -20,8 +20,9 @@ const wait = (timeout) => {
   }
 
 export default function Like({ navigation, content }) {
-  LogBox.ignoreLogs(["Warning: ..."]);
-  LogBox.ignoreLogs(["Setting a timer"]);
+  // LogBox.ignoreLogs(["Warning: ..."]);
+  // LogBox.ignoreLogs(["Setting a timer"]);
+  LogBox.ignoreAllLogs();
   const [tip, setTip] = useState([]);
   const [ready, setReady] = useState(true);
   const [refreshing, setRefreshing] = useState(false); //새로고침용

@@ -94,9 +94,9 @@ const styles = StyleSheet.create({
   },
 
   cardTitle: {
-    fontSize: 20,
+    fontSize: 16,
     fontWeight: "700",
-    paddingTop: 3,
+    paddingTop: 10,
   },
   trash_icon: {
     fontSize: 24,

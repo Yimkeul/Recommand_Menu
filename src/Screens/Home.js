@@ -37,8 +37,10 @@ const _HEIGHT = Dimensions.get("window").height;
 
 const Home = ({ navigation, route }) => {
   //에러 숨기기
-  LogBox.ignoreLogs(["Warning: ..."]);
-  LogBox.ignoreLogs(["Setting a timer"]);
+  // LogBox.ignoreLogs(["Warning: ..."]);
+  // LogBox.ignoreLogs(["Setting a timer"]);
+  // LogBox.ignoreLogs(["source.uri"]);
+  LogBox.ignoreAllLogs();
 
   const [refreshing, setRefreshing] = useState(false); //새로고침용
 
@@ -48,36 +50,30 @@ const Home = ({ navigation, route }) => {
 
   const [ready, setReady] = useState(false); //대기
 
-  useEffect(() => {
-    // firebase_db
-    //   .ref("/tip")
-    //   .once("value")
-    //   .then((snapshot) => {
-    //     console.log("파이어베이스에서 데이터 가져왔습니다!!");
-    //     let tip = snapshot.val();
-    //     setState(tip);
-    //     getLocation();
-    //     setReady(true);
+  const [random, setRandom ] = useState(0) // 랜덤 숫자 저장용
 
-    //   });
-    // getLocation();
-    test();
-    // console.log(state.length)
-  }, [weather.condition]);
 
   const [cate,setCate] = useState([
     {
       idx:0,
       category:"",
       title:"",
-      image: "",
+      image: "null",
       desc:"",
       date:"",
-      weather : ""
+      weather : "",
+      season :""
     }
   ]
-  )
-  const [random, setRandom ] = useState(0)
+  ) // 랜덤 데이터 저장용 초기값
+
+
+  useEffect(() => {
+    test();
+  }, [weather.condition]);
+
+  
+  //랜덤뽑기
   const test = () => {
     firebase_db
       .ref("/tip")
@@ -88,7 +84,9 @@ const Home = ({ navigation, route }) => {
         getLocation();
         setState(tip);
       });
-      // console.log(cate)
+    
+
+    //조건 셋팅 장소
     if (weather.condition == "구름") {
       setCate(
         state.filter((d) => {
@@ -102,6 +100,28 @@ const Home = ({ navigation, route }) => {
         })
       );
     }
+    else if (weather.condition == "비") {
+      setCate(
+        state.filter((d) => {
+          return d.weather == "비";
+        })
+      );
+    }else if (weather.condition == "눈") {
+      setCate(
+        state.filter((d) => {
+          return d.weather == "눈";
+        })
+      );
+    }//여기서는 data.json에 계절 session만들고 그걸로 필터링 해야함
+    else if (weather.condition == "알수없음") {
+      setCate(
+        state.filter((d) => {
+          return d.season == "맑음";
+        })
+      );
+    }
+
+
     let min = 0
     let max = cate.length
     let rn = Math.floor(Math.random() * (max - min)) + min
@@ -112,14 +132,13 @@ const Home = ({ navigation, route }) => {
 
   //날씨 정보 가져오기
   const getLocation = async () => {
-    //수많은 로직중에 에러가 발생하면
-    //해당 에러를 포착하여 로직을 멈추고,에러를 해결하기 위한 catch 영역 로직이 실행
     try {
       await Location.requestForegroundPermissionsAsync();
       const locationData = await Location.getCurrentPositionAsync();
       const latitude = locationData.coords.latitude;
       const longitude = locationData.coords.longitude;
       // const API_KEY = "62a3e1c15a974cb7212dd251dddb4fa7";
+     
       const API_KEY = "cfc258c75e1da2149c33daffd07a911d";
       const result = await axios.get(
         `https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&exclude=alerts&appid=${API_KEY}&units=metric`
@@ -128,6 +147,7 @@ const Home = ({ navigation, route }) => {
       const _weather = result.data.weather[0].main;
       const temp = result.data.main.temp;
 
+      console.log("현 위치 : "+result.data.name)
       if (
         _weather === "Drizzle" ||
         _weather === "Rain" ||
@@ -152,6 +172,7 @@ const Home = ({ navigation, route }) => {
   };
 
   //새로고침
+  //위치정보, 랜덤뽑기
   const onRefresh = useCallback(() => {
     setRefreshing(true);
     wait(2000).then(() => getLocation(),test(), setRefreshing(false));
@@ -168,9 +189,6 @@ const Home = ({ navigation, route }) => {
     }
 
     console.log(userUniqueId);
-    //tip.idx 이부분에서 tip은 useState로 저장을 해야하는데 저장해야하는 데이터는
-    //날씨 + 기온 받아서 랜덤으로 뽑은 데이터를 저장한 훅이다.
-    //이건 로직 짜야함
     firebase_db
       .ref("/like/" + userUniqueId + "/" + cate[random].idx)
       .set(cate[random], function (error) {
@@ -181,7 +199,7 @@ const Home = ({ navigation, route }) => {
   };
 
   return (
-    <SafeAreaView style={{ backgroundColor: "rgb(224,212,191)", flex: 1 }}>
+    <SafeAreaView style={{ backgroundColor: "#e0d4bf", flex: 1 }}>
       <ScrollView
         refreshControl={
           <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
@@ -192,7 +210,7 @@ const Home = ({ navigation, route }) => {
 
         {/* 상단 제목 */}
         <View id="Title" style={styles.title}>
-          <Text style={styles.title_text}>Daily Specials</Text>
+          <Text style={styles.title_text}>- Daily Specials -</Text>
         </View>
 
         {/* 추천 메뉴 카드 */}
@@ -239,7 +257,7 @@ const Home = ({ navigation, route }) => {
 
         {/* 추가 메뉴 추천 제목 */}
         <View id="Title2" style={styles.title2}>
-          <Text style={styles.title2_text}>Dishes</Text>
+          <Text style={styles.title2_text}>- Dishes -</Text>
         </View>
 
         {/* 추가 메뉴 카드 */}
@@ -295,7 +313,8 @@ const styles = StyleSheet.create({
   // 기본 국룰 : marginHorizontal : '2.5%'
   container: {
     flex: 1,
-    backgroundColor: "rgb(224,212,191)",
+    // backgroundColor: "rgb(224,212,191)",
+    // backgroundColor: '#FFFAF2'
   },
 
   title: {
