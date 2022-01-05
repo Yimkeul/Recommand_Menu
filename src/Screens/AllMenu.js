@@ -12,11 +12,13 @@ import {
   RefreshControl,
   SafeAreaView,
   StatusBar,
+  Dimensions
 } from "react-native";
 import { color } from "react-native-reanimated";
 
 import Data from "../../data.json";
 import Card from "../components/Card";
+const _HEIGHT = Dimensions.get('window').height
 
 export default function AllMenu({ navigation, route }) {
   LogBox.ignoreLogs(["Warning: ..."]);
@@ -60,11 +62,14 @@ export default function AllMenu({ navigation, route }) {
   return (
     <SafeAreaView style={{ backgroundColor: "rgb(224,212,191)", flex: 1 }}>
       {/* 전체 스크롤 */}
-      <ScrollView style={{}}>
+
         {/* 안드로이드용 */}
         <StatusBar barStyle="dark-content" backgroundColor={"white"} />
 
         {/* 메뉴 스크롤 */}
+        <View>
+
+        
         <ScrollView
           style={styles.middleContainer}
           horizontal
@@ -232,6 +237,8 @@ export default function AllMenu({ navigation, route }) {
             </Text>
           </TouchableOpacity>
         </ScrollView>
+        </View>
+        <ScrollView>
 
         <View style={styles.cardContainer}>
           {/* 하나의 카드 영역을 나타내는 View */}
@@ -248,25 +255,32 @@ const styles = StyleSheet.create({
   //메뉴들꺼
   cardContainer: {
     marginTop: 10,
-    marginLeft: 10,
+    // marginLeft: 10,
+    marginHorizontal : '2.5%',
   },
 
   //위에 카테고리
   middleContainer: {
-    marginTop: 5,
-    marginLeft: 10,
+    // marginTop: 5,
+    marginHorizontal : '4.5%',
     borderBottomWidth : 1,
-    borderBottomColor : 'gray'
+    borderBottomColor : 'gray',
+    // backgroundColor:'yellow',
+    
+    
   },
   middleButton: {
-    paddingVertical: 10,
-    paddingHorizontal: 20,
+    paddingTop: 10,
+    paddingHorizontal: 25,
     borderRadius: 15,
     margin: 7,
+ 
+    
   },
   middleButtonText: {
     color: "gray",
-
+    // paddingVertical : _HEIGHT*0.,
+    
     fontWeight: "700",
     textAlign: "center",
   },

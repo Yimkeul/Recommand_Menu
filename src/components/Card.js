@@ -23,58 +23,66 @@ export default function Card({ content, navigation }) {
     onPress={() => navigation.navigate("Details", { idx: content.idx })}
   >
     <View id="image_title_card" style={styles.image_title_card}>
-      <Image style={styles.cardImage} source={{ uri: content.image }} />
+        <Image style={styles.cardImage} source={{ uri: content.image }} />
 
-      <View style={styles.cardText}>
-        <Text style={styles.cardTitle} numberOfLines={1}>
-          {content.title}
-        </Text>
+        <View style={styles.cardText}>
+          <Text style={styles.cardTitle} numberOfLines={1}>
+            {content.title}
+          </Text>
+        </View>
+
+
       </View>
-    </View>
-  </TouchableOpacity>
-);
+    </TouchableOpacity>
+  );
 }
 
 const styles = StyleSheet.create({
-card: {
-  flex: 1,
-  flexDirection: "row",
-  marginHorizontal: 10,
-  marginTop: 10,
-  borderRadius: 17,
-},
+  card: {
+    flex: 1,
+    flexDirection: "row",
+    marginHorizontal: 10,
+    marginTop: 10,
+    borderRadius: 17,
+  },
 
-image_title_card: {
-  backgroundColor: "white",
-  width: "100%",
-  borderRadius: 17,
-  height: _HEIGHT * 0.25,
-},
+  image_title_card: {
+    flex : 1,
+    backgroundColor: "white",
+    width: "100%",
+    borderRadius: 17,
+    height: _HEIGHT * 0.25,
+  },
 
-cardImage: {
-  // flex: 1,
-  width: "100%",
-  height: "80%",
-  borderRadius: 10,
-},
+  cardImage: {
+    flex: 4,
+    // width: "100%",
+    // height: "80%",
+    borderRadius: 10,
+  },
 
-cardText: {
-  flexDirection: "row",
-  marginLeft: 10,
-  justifyContent:'space-between'
-},
+  cardText: {
+    flex : 1,
+    flexDirection: "row",
+    marginLeft: 10,
+    borderRadius: 17,
+    alignItems :"center"
 
-cardTitle: {
-  fontSize: 20,
-  fontWeight: "700",
-  paddingTop: 3,
-},
-trash_icon: {
-  fontSize: 24,
-  paddingHorizontal : '1%', 
-  paddingVertical : '2%',  
-  // backgroundColor: "red",
-  marginRight : 10
+    // justifyContent: "space-between",
+  },
 
-},
+  cardTitle: {
+    flex : 5,
+    fontSize: 16,
+    fontWeight: "700",
+    textAlignVertical :'bottom'
+    // paddingTop: "2%",
+  },
+  trash_icon: {
+    fontSize: 24,
+    // marginRight: 10,
+    justifyContent: "center",
+    alignItems: "center",
+    textAlignVertical :'bottom'
+  },
 });
