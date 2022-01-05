@@ -24,11 +24,28 @@ import axios from "axios";
 import { firebase_db } from "../firebaseConfig";
 import * as Application from "expo-application";
 import * as Location from "expo-location";
-import Data from '../../data.json'
+
+import Data from '../../data.json' // 나중에 삭제
+
 const isIOS = Platform.OS === "ios";
 
+//월 + 계절 구하기
+let month = new Date().getMonth()+1
+let isSeason
+if(month==3||month==4||month==5){
+  isSeason='봄'
+}else if(month==6||month==7||month==8){
+  isSeason='여름'
+}else if(month==9||month==10||month==11){
+  isSeason='가을'
+}else if(month==12||month==1||month==2){
+  isSeason='겨울'
+}
 
- 
+
+
+console.log(`isSeason : ${isSeason}`)
+
 
 const wait = (timeout) => {
   return new Promise((resolve) => setTimeout(resolve, timeout));
@@ -37,15 +54,8 @@ const _WEIGHT = Dimensions.get("window").width;
 const _HEIGHT = Dimensions.get("window").height;
 
 const Home = ({ navigation, route }) => {
+
   //에러 숨기기
-  // LogBox.ignoreLogs(["Warning: ..."]);
-  // LogBox.ignoreLogs(["Setting a timer"]);
-  // LogBox.ignoreLogs(["source.uri"]);
-
-
-
-
-
   LogBox.ignoreAllLogs();
 
   const [refreshing, setRefreshing] = useState(false); //새로고침용
@@ -58,9 +68,8 @@ const Home = ({ navigation, route }) => {
 
   const [random, setRandom ] = useState(0) // 랜덤 숫자 저장용
 
-  const [date_, setDate_] = useState()
+  const [season_,setSeason] = useState(isSeason)
   
-
 
   const [cate,setCate] = useState([
     {
@@ -92,8 +101,9 @@ const Home = ({ navigation, route }) => {
         let tip = snapshot.val();
         getLocation();
         setState(tip);
+  
       });
-
+      // console.log(`~~~~~~~~~~~~~~~${season_}~~~~~~~~~~`)
 
     //조건 셋팅 장소
     if (weather.condition == "구름") {
@@ -102,6 +112,13 @@ const Home = ({ navigation, route }) => {
           return d.weather == "구름";
         })
       );
+
+      //테스트중
+      // setCate(
+      //   state.filter((d) => {
+      //     return d.season == season_;
+      //   })
+      // );
     }else if (weather.condition == "맑음") {
       setCate(
         state.filter((d) => {
@@ -121,18 +138,7 @@ const Home = ({ navigation, route }) => {
           return d.weather == "눈";
         })
       );
-      // setCate(
-      //   state.filter((d) => {
-      //     return (d.weather == "눈"&&d.season=="겨울");
-      //   })
-      // );
-      // if(weather.temp<2){
-      //   setCate(
-      //     cate.filter((d)=>{
-      //       return d.season =="겨울"
-      //     })
-      //   )
-      // }
+
     }//여기서는 data.json에 계절 session만들고 그걸로 필터링 해야함
     else if (weather.condition == "알수없음") {
       setCate(
@@ -151,8 +157,6 @@ const Home = ({ navigation, route }) => {
     setRandom(rn)
 
 
-    let dd = new Date()
-    setDate_(dd.getMonth()+1)
 
 
   };
@@ -191,8 +195,11 @@ const Home = ({ navigation, route }) => {
       } else {
         setWeather({ temp, condition: "알수없음" });
       }
-
+    
       console.log(weather.condition + " " + weather.temp);
+
+   
+
     } catch (error) {
       // Alert.alert("위치를 찾을 수가 없습니다.", "앱을 껏다 켜볼까요?")
       console.log(error);
@@ -248,7 +255,9 @@ const Home = ({ navigation, route }) => {
               <Text id="image_title" style={styles.image_title}>
                 {cate[random].title}
                 {console.log("-----렌더링 후 ----------")}
-                {console.log(date_ + "월")}
+                {/* {console.log(date_ + "월")}
+                {console.log(season_+ " 계절")} */}
+                {console.log(season_+ " 계절")}
               </Text>
             </View>
             <View
