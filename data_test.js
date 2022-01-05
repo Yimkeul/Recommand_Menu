@@ -19,7 +19,6 @@
 // title : 제목
 //  imgae : 파이어베이스 저장
 //  materials : 준비물
-
 //  recipe :  레시피
 //  source : 출처
 //  weather : 날씨 (보통,비,눈)

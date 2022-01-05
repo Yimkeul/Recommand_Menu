@@ -44,7 +44,7 @@ if(month==3||month==4||month==5){
 
 
 
-console.log(`isSeason : ${isSeason}`)
+// console.log(`isSeason : ${isSeason}`)
 
 
 const wait = (timeout) => {
@@ -77,8 +77,9 @@ const Home = ({ navigation, route }) => {
       category:"",
       title:"",
       image: "null",
-      desc:"",
-      date:"",
+      materials:"",
+      recipe:"",
+      source:"",
       weather : "",
       season :""
     }
@@ -103,62 +104,109 @@ const Home = ({ navigation, route }) => {
         setState(tip);
   
       });
-      // console.log(`~~~~~~~~~~~~~~~${season_}~~~~~~~~~~`)
 
+   
     //조건 셋팅 장소
-    if (weather.condition == "구름") {
-      setCate(
-        state.filter((d) => {
-          return d.weather == "구름";
-        })
-      );
 
-      //테스트중
-      // setCate(
-      //   state.filter((d) => {
-      //     return d.season == season_;
-      //   })
-      // );
-    }else if (weather.condition == "맑음") {
-      setCate(
-        state.filter((d) => {
-          return d.weather == "맑음";
-        })
-      );
-    }
-    else if (weather.condition == "비") {
-      setCate(
-        state.filter((d) => {
-          return (d.weather == "비"&& d.season=="겨울");
-        })
-        );
-    }else if (weather.condition == "눈") {
-      setCate(
-        state.filter((d) => {
-          return d.weather == "눈";
-        })
-      );
-
-    }//여기서는 data.json에 계절 session만들고 그걸로 필터링 해야함
-    else if (weather.condition == "알수없음") {
-      setCate(
-        state.filter((d) => {
-          return d.season == "맑음";
-        })
-      );
+    //봄
+    if (season_ == "봄") {
+      if(weather.condition == '보통'){
+        setCate(
+          state.filter((d)=>{
+            return ((d.season=='봄'||d.season=='전체')&&d.weather=='보통')
+          })
+        )
+      }else if(weather.condition == '비'){
+        setCate(
+          state.filter((d)=>{
+            return ((d.season=='봄'||d.season=='전체')&&d.weather=='비')
+          })
+        )
+      }else if(weather.condition == '눈'){
+        setCate(
+          state.filter((d)=>{
+            return ((d.season=='봄'||d.season=='전체')&&d.weather=='눈')
+          })
+        )
+      }
     }
 
+    //여름
+    else if (season_ == "여름") {
+      if(weather.condition == '보통'){
+        setCate(
+          state.filter((d)=>{
+            return ((d.season=='여름'||d.season=='전체')&&d.weather=='보통')
+          })
+        )
+      }else if(weather.condition == '비'){
+        setCate(
+          state.filter((d)=>{
+            return ((d.season=='여름'||d.season=='전체')&&d.weather=='비')
+          })
+        )
+      }else if(weather.condition == '눈'){
+        setCate(
+          state.filter((d)=>{
+            return ((d.season=='여름'||d.season=='전체')&&d.weather=='눈')
+          })
+        )
+      }
+    }
+
+    //가을
+    else if (season_ == "가을") {
+      if(weather.condition == '보통'){
+        setCate(
+          state.filter((d)=>{
+            return ((d.season=='가을'||d.season=='전체')&&d.weather=='보통')
+          })
+        )
+      }else if(weather.condition == '비'){
+        setCate(
+          state.filter((d)=>{
+            return ((d.season=='가을'||d.season=='전체')&&d.weather=='비')
+          })
+        )
+      }else if(weather.condition == '눈'){
+        setCate(
+          state.filter((d)=>{
+            return ((d.season=='가을'||d.season=='전체')&&d.weather=='눈')
+          })
+        )
+      }
+    }
+
+    //겨울
+    else if (season_ == "겨울") {
+      if(weather.condition == '보통'){
+        setCate(
+          state.filter((d)=>{
+            return ((d.season=='겨울'||d.season=='전체')&&d.weather=='보통')
+          })
+        )
+      }else if(weather.condition == '비'){
+        setCate(
+          state.filter((d)=>{
+            return ((d.season=='겨울'||d.season=='전체')&&d.weather=='비')
+          })
+        )
+      }else if(weather.condition == '눈'){
+        setCate(
+          state.filter((d)=>{
+            return ((d.season=='겨울'||d.season=='전체')&&d.weather=='눈')
+          })
+        )
+      }
+    }
+  
 
     let min = 0
     let max = cate.length
     let rn = Math.floor(Math.random() * (max - min)) + min
-    // console.log(cate.length + "이게 조건에 맞는것들")
+
     console.log(`랜덤 숫자는 ${rn}`)
     setRandom(rn)
-
-
-
-
   };
 
 
@@ -188,17 +236,11 @@ const Home = ({ navigation, route }) => {
         setWeather({ temp, condition: "비" });
       } else if (_weather === "Snow") {
         setWeather({ temp, condition: "눈" });
-      } else if (_weather === "Clear") {
-        setWeather({ temp, condition: "맑음" });
-      } else if (_weather === "Clouds") {
-        setWeather({ temp, condition: "구름" });
+      } else if (_weather === "Clear"||_weather === "Clouds") {
+        setWeather({ temp, condition: "보통" });
       } else {
-        setWeather({ temp, condition: "알수없음" });
+        setWeather({ temp, condition: "보통" });
       }
-    
-      console.log(weather.condition + " " + weather.temp);
-
-   
 
     } catch (error) {
       // Alert.alert("위치를 찾을 수가 없습니다.", "앱을 껏다 켜볼까요?")
@@ -229,7 +271,7 @@ const Home = ({ navigation, route }) => {
       .set(cate[random], function (error) {
         console.log(error);
         console.log(cate[random]);
-        Alert.alert("홈화면에서 저장!");
+        Alert.alert("저장!");
       });
   };
 
@@ -254,10 +296,9 @@ const Home = ({ navigation, route }) => {
             <View id="image_title_space" style={styles.image_title_space}>
               <Text id="image_title" style={styles.image_title}>
                 {cate[random].title}
-                {console.log("-----렌더링 후 ----------")}
-                {/* {console.log(date_ + "월")}
-                {console.log(season_+ " 계절")} */}
-                {console.log(season_+ " 계절")}
+                {console.log("~~~렌더링이후임~~")}
+                {console.log(cate.length)}
+                {console.log(`${isSeason} ${cate} ${weather.condition} ${weather.temp}`)}
               </Text>
             </View>
             <View
@@ -383,8 +424,9 @@ const styles = StyleSheet.create({
     backgroundColor: "white",
     height: "20%",
     justifyContent: "center",
-    borderBottomWidth: 2,
-    borderBottomColor: "red",
+    borderBottomWidth :5,
+ 
+
   },
   image_title: {
     fontSize: 25,

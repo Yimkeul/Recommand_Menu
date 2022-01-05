@@ -65,7 +65,7 @@ export default function Details({ navigation, route }) {
       <Image style={styles.image} source={{ uri: tip.image }} />
       <View style={styles.textContainer}>
         <Text style={styles.title}>{tip.title}</Text>
-        <Text style={styles.desc}>{tip.desc}</Text>
+        <Text style={styles.recipe}>{tip.recipe}</Text>
         <TouchableOpacity style={styles.button} onPress={() => like()}>
           <Text style={styles.buttonText}>팁 찜하기</Text>
         </TouchableOpacity>
@@ -94,7 +94,7 @@ const styles = StyleSheet.create({
     fontWeight: "700",
     color: "#eee",
   },
-  desc: {
+  recipe: {
     marginTop: 10,
     color: "#eee",
   },
