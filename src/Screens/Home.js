@@ -58,6 +58,9 @@ const Home = ({ navigation, route }) => {
 
   const [random, setRandom ] = useState(0) // 랜덤 숫자 저장용
 
+  const [date_, setDate_] = useState()
+  
+
 
   const [cate,setCate] = useState([
     {
@@ -143,9 +146,15 @@ const Home = ({ navigation, route }) => {
     let min = 0
     let max = cate.length
     let rn = Math.floor(Math.random() * (max - min)) + min
-    console.log(cate.length + "이게 조건에 맞는것들")
+    // console.log(cate.length + "이게 조건에 맞는것들")
     console.log(`랜덤 숫자는 ${rn}`)
     setRandom(rn)
+
+
+    let dd = new Date()
+    setDate_(dd.getMonth()+1)
+
+
   };
 
 
@@ -238,8 +247,8 @@ const Home = ({ navigation, route }) => {
             <View id="image_title_space" style={styles.image_title_space}>
               <Text id="image_title" style={styles.image_title}>
                 {cate[random].title}
-                {/* {console.log("-----렌더링 후 ----------")}
-                {console.log(cate[random].title)} */}
+                {console.log("-----렌더링 후 ----------")}
+                {console.log(date_ + "월")}
               </Text>
             </View>
             <View

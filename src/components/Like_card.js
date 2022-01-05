@@ -55,10 +55,15 @@ export default function Like_card({ content, navigation, tip, setTip }) {
           <Text style={styles.cardTitle} numberOfLines={1}>
             {content.title}
           </Text>
-          <TouchableOpacity onPress={() => remove(content.idx)}>
+
+          <TouchableOpacity onPress={() => remove(content.idx)} style={{flex : 1}}>
+            <View style={{  flex : 1, alignItems :'center', justifyContent :'center'}}>
               <Feather name="trash-2" color="black" style={styles.trash_icon} />
-            </TouchableOpacity>
+            </View>
+          </TouchableOpacity>
         </View>
+
+
       </View>
     </TouchableOpacity>
   );
@@ -74,6 +79,7 @@ const styles = StyleSheet.create({
   },
 
   image_title_card: {
+    flex : 1,
     backgroundColor: "white",
     width: "100%",
     borderRadius: 17,
@@ -81,29 +87,34 @@ const styles = StyleSheet.create({
   },
 
   cardImage: {
-    // flex: 1,
-    width: "100%",
-    height: "80%",
+    flex: 4,
+    // width: "100%",
+    // height: "80%",
     borderRadius: 10,
   },
 
   cardText: {
+    flex : 1,
     flexDirection: "row",
     marginLeft: 10,
-    justifyContent:'space-between'
+    borderRadius: 17,
+    alignItems :"center"
+
+    // justifyContent: "space-between",
   },
 
   cardTitle: {
+    flex : 5,
     fontSize: 16,
     fontWeight: "700",
-    paddingTop: 10,
+    textAlignVertical :'bottom'
+    // paddingTop: "2%",
   },
   trash_icon: {
     fontSize: 24,
-    paddingHorizontal : '1%', 
-    paddingVertical : '2%',  
-    // backgroundColor: "red",
-    marginRight : 10
-
+    // marginRight: 10,
+    justifyContent: "center",
+    alignItems: "center",
+    textAlignVertical :'bottom'
   },
 });

@@ -65,7 +65,8 @@ const Navigate = () => {
             headerRight: () => (
               <TouchableOpacity
                 onPress={() => navigation.navigate("Like")}
-                style={{ paddingHorizontal: 20 }}
+                // style={{ paddingHorizontal: '5%', backgroundColor:'blue' , marginRight :'50%' }}
+                style={{paddingLeft : '10%' , paddingRight :'15%'}}
               >
                 <AntDesign name="hearto" size={30} color="rgb(169,63,54)" />
               </TouchableOpacity>
@@ -80,7 +81,7 @@ const Navigate = () => {
             title : "──⋅( Like )⋅──",
             headerRight: () => (
               <TouchableOpacity
-                style={{ paddingHorizontal: 20 }}
+              style={{paddingLeft : '10%' , paddingRight :'15%'}}
                 onPress={() => navigation.goBack()}
               >
                 <AntDesign name="heart" size={30} color="rgb(169,63,54)" />
@@ -97,7 +98,7 @@ const Navigate = () => {
             headerRight: () => (
               <TouchableOpacity
                 onPress={() => navigation.navigate("Like")}
-                style={{ paddingHorizontal: 20 }}
+                style={{paddingLeft : '10%' , paddingRight :'15%'}}
               >
                 <AntDesign name="hearto" size={30} color="rgb(169,63,54)" />
               </TouchableOpacity>
@@ -113,7 +114,7 @@ const Navigate = () => {
             headerRight: () => (
               <TouchableOpacity
                 onPress={() => navigation.navigate("Like")}
-                style={{ paddingHorizontal: 20 }}
+                style={{paddingLeft : '10%' , paddingRight :'15%'}}
               >
                 <AntDesign name="hearto" size={30} color="rgb(169,63,54)" />
               </TouchableOpacity>
@@ -126,12 +127,7 @@ const Navigate = () => {
 };
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#fff",
-    alignItems: "center",
-    justifyContent: "center",
-  },
+
 });
 
 export default Navigate;
