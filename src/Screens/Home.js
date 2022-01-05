@@ -2,8 +2,6 @@ import React, {
   useEffect,
   useState,
   useCallback,
-  useMemo,
-  useRef,
 } from "react";
 import {
   View,
@@ -26,8 +24,11 @@ import axios from "axios";
 import { firebase_db } from "../firebaseConfig";
 import * as Application from "expo-application";
 import * as Location from "expo-location";
-
+import Data from '../../data.json'
 const isIOS = Platform.OS === "ios";
+
+
+ 
 
 const wait = (timeout) => {
   return new Promise((resolve) => setTimeout(resolve, timeout));
@@ -40,6 +41,11 @@ const Home = ({ navigation, route }) => {
   // LogBox.ignoreLogs(["Warning: ..."]);
   // LogBox.ignoreLogs(["Setting a timer"]);
   // LogBox.ignoreLogs(["source.uri"]);
+
+
+
+
+
   LogBox.ignoreAllLogs();
 
   const [refreshing, setRefreshing] = useState(false); //새로고침용
@@ -84,7 +90,7 @@ const Home = ({ navigation, route }) => {
         getLocation();
         setState(tip);
       });
-    
+
 
     //조건 셋팅 장소
     if (weather.condition == "구름") {
@@ -103,15 +109,27 @@ const Home = ({ navigation, route }) => {
     else if (weather.condition == "비") {
       setCate(
         state.filter((d) => {
-          return d.weather == "비";
+          return (d.weather == "비"&& d.season=="겨울");
         })
-      );
+        );
     }else if (weather.condition == "눈") {
       setCate(
         state.filter((d) => {
           return d.weather == "눈";
         })
       );
+      // setCate(
+      //   state.filter((d) => {
+      //     return (d.weather == "눈"&&d.season=="겨울");
+      //   })
+      // );
+      // if(weather.temp<2){
+      //   setCate(
+      //     cate.filter((d)=>{
+      //       return d.season =="겨울"
+      //     })
+      //   )
+      // }
     }//여기서는 data.json에 계절 session만들고 그걸로 필터링 해야함
     else if (weather.condition == "알수없음") {
       setCate(
@@ -125,6 +143,7 @@ const Home = ({ navigation, route }) => {
     let min = 0
     let max = cate.length
     let rn = Math.floor(Math.random() * (max - min)) + min
+    console.log(cate.length + "이게 조건에 맞는것들")
     console.log(`랜덤 숫자는 ${rn}`)
     setRandom(rn)
   };
@@ -219,6 +238,8 @@ const Home = ({ navigation, route }) => {
             <View id="image_title_space" style={styles.image_title_space}>
               <Text id="image_title" style={styles.image_title}>
                 {cate[random].title}
+                {/* {console.log("-----렌더링 후 ----------")}
+                {console.log(cate[random].title)} */}
               </Text>
             </View>
             <View
