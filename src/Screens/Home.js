@@ -25,7 +25,7 @@ import { firebase_db } from "../firebaseConfig";
 import * as Application from "expo-application";
 import * as Location from "expo-location";
 
-import Data from '../../data.json' // 나중에 삭제
+// import Data from '../../data.json' // 나중에 삭제
 
 const isIOS = Platform.OS === "ios";
 

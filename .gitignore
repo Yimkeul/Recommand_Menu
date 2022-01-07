@@ -56,4 +56,4 @@ dist/
 
 
 src/firebaseConfig.js
-data.json
+src/data.json
