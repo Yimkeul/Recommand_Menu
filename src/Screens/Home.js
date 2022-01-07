@@ -77,9 +77,9 @@ const Home = ({ navigation, route }) => {
       category:"",
       title:"",
       image: "null",
-      materials:"",
       recipe:"",
       source:"",
+      img_source:"",
       weather : "",
       season :""
     }
@@ -119,13 +119,13 @@ const Home = ({ navigation, route }) => {
       }else if(weather.condition == '비'){
         setCate(
           state.filter((d)=>{
-            return ((d.season=='봄'||d.season=='전체')&&d.weather=='비')
+            return ((d.season=='봄'||d.season=='전체')&&(d.weather=='비'||d.weather=='둘다'))
           })
         )
       }else if(weather.condition == '눈'){
         setCate(
           state.filter((d)=>{
-            return ((d.season=='봄'||d.season=='전체')&&d.weather=='눈')
+            return ((d.season=='봄'||d.season=='전체')&&(d.weather=='비'||d.weather=='둘다'))
           })
         )
       }
@@ -142,13 +142,13 @@ const Home = ({ navigation, route }) => {
       }else if(weather.condition == '비'){
         setCate(
           state.filter((d)=>{
-            return ((d.season=='여름'||d.season=='전체')&&d.weather=='비')
+            return ((d.season=='여름'||d.season=='전체')&&(d.weather=='비'||d.weather=='둘다'))
           })
         )
       }else if(weather.condition == '눈'){
         setCate(
           state.filter((d)=>{
-            return ((d.season=='여름'||d.season=='전체')&&d.weather=='눈')
+            return ((d.season=='여름'||d.season=='전체')&&(d.weather=='비'||d.weather=='둘다'))
           })
         )
       }
@@ -165,13 +165,13 @@ const Home = ({ navigation, route }) => {
       }else if(weather.condition == '비'){
         setCate(
           state.filter((d)=>{
-            return ((d.season=='가을'||d.season=='전체')&&d.weather=='비')
+            return ((d.season=='가을'||d.season=='전체')&&(d.weather=='비'||d.weather=='둘다'))
           })
         )
       }else if(weather.condition == '눈'){
         setCate(
           state.filter((d)=>{
-            return ((d.season=='가을'||d.season=='전체')&&d.weather=='눈')
+            return ((d.season=='가을'||d.season=='전체')&&(d.weather=='비'||d.weather=='둘다'))
           })
         )
       }
@@ -188,13 +188,13 @@ const Home = ({ navigation, route }) => {
       }else if(weather.condition == '비'){
         setCate(
           state.filter((d)=>{
-            return ((d.season=='겨울'||d.season=='전체')&&d.weather=='비')
+            return ((d.season=='겨울'||d.season=='전체')&&(d.weather=='비'||d.weather=='둘다'))
           })
         )
       }else if(weather.condition == '눈'){
         setCate(
           state.filter((d)=>{
-            return ((d.season=='겨울'||d.season=='전체')&&d.weather=='눈')
+            return ((d.season=='겨울'||d.season=='전체')&&(d.weather=='비'||d.weather=='둘다'))
           })
         )
       }

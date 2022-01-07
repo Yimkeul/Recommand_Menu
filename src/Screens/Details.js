@@ -9,6 +9,7 @@ import {
   Alert,
   Platform,
   LogBox,
+  Linking
 } from "react-native";
 import { firebase_db } from "../firebaseConfig";
 import * as Application from "expo-application";
@@ -67,7 +68,10 @@ export default function Details({ navigation, route }) {
         <Text style={styles.title}>{tip.title}</Text>
         <Text style={styles.recipe}>{tip.recipe}</Text>
         <TouchableOpacity style={styles.button} onPress={() => like()}>
-          <Text style={styles.buttonText}>팁 찜하기</Text>
+          <Text style={styles.buttonText}>메뉴 찜하기</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.button} onPress={() => Linking.openURL(tip.source)}>
+          <Text style={styles.buttonText}>출처 바로가기</Text>
         </TouchableOpacity>
       </View>
     </ScrollView>
@@ -99,7 +103,7 @@ const styles = StyleSheet.create({
     color: "#eee",
   },
   button: {
-    width: 100,
+    // width: 100,
     marginTop: 20,
     padding: 10,
     borderWidth: 1,

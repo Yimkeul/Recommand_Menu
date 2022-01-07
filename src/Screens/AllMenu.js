@@ -102,7 +102,7 @@ export default function AllMenu({ navigation, route }) {
           <TouchableOpacity
             style={{ ...styles.middleButton }}
             onPress={() => {
-              con_category("생활");
+              con_category("한식");
               setClick1(false);
               setClick2(true);
               setClick3(false);
@@ -125,7 +125,7 @@ export default function AllMenu({ navigation, route }) {
           <TouchableOpacity
             style={{ ...styles.middleButton }}
             onPress={() => {
-              con_category("재테크");
+              con_category("중식");
               setClick1(false);
               setClick2(false);
               setClick3(true);
@@ -148,7 +148,7 @@ export default function AllMenu({ navigation, route }) {
           <TouchableOpacity
             style={{ ...styles.middleButton }}
             onPress={() => {
-              con_category("반려견");
+              con_category("일식");
               setClick1(false);
               setClick2(false);
               setClick3(false);
@@ -171,7 +171,7 @@ export default function AllMenu({ navigation, route }) {
           <TouchableOpacity
             style={{ ...styles.middleButton }}
             onPress={() => {
-              con_category("반려견");
+              con_category("양식");
               setClick1(false);
               setClick2(false);
               setClick3(false);
@@ -194,7 +194,7 @@ export default function AllMenu({ navigation, route }) {
           <TouchableOpacity
             style={{ ...styles.middleButton }}
             onPress={() => {
-              con_category("반려견");
+              con_category("분식");
               setClick1(false);
               setClick2(false);
               setClick3(false);
@@ -217,7 +217,7 @@ export default function AllMenu({ navigation, route }) {
           <TouchableOpacity
             style={{ ...styles.middleButton }}
             onPress={() => {
-              con_category("반려견");
+              con_category("디저트");
               setClick1(false);
               setClick2(false);
               setClick3(false);

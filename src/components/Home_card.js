@@ -45,5 +45,6 @@ const styles = StyleSheet.create({
     fontSize: 10,
     textAlign: "center",
     marginTop: 20,
+    fontWeight : "bold"
   }
 })
