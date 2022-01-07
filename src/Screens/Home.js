@@ -68,7 +68,7 @@ const Home = ({ navigation, route }) => {
 
   const [random, setRandom ] = useState(0) // 랜덤 숫자 저장용
 
-  const [season_,setSeason] = useState(isSeason)
+  const [season_,setSeason] = useState(isSeason) // 계절 저장
   
 
   const [cate,setCate] = useState([
