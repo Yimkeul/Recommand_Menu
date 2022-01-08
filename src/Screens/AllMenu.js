@@ -14,9 +14,9 @@ import {
   StatusBar,
   Dimensions
 } from "react-native";
-import { color } from "react-native-reanimated";
 
-import Data from "../../data.json";
+import { firebase_db } from "../firebaseConfig";
+
 import Card from "../components/Card";
 const _HEIGHT = Dimensions.get('window').height
 
@@ -39,9 +39,16 @@ export default function AllMenu({ navigation, route }) {
   const [click7, setClick7] = useState(false);
 
   useEffect(() => {
-    setState(Data.tip);
-    setCategory(Data.tip);
-    setClick1(true)
+    firebase_db
+    .ref("/tip")
+    .once("value")
+    .then((snapshot) => {
+
+      let tip = snapshot.val();
+    
+      setState(tip);
+      setCategory(tip)
+    });
   }, []);
 
  
