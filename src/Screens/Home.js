@@ -94,17 +94,19 @@ const Home = ({ navigation, route }) => {
   
   //랜덤뽑기
   const test = () => {
-    firebase_db
-      .ref("/tip")
-      .once("value")
-      .then((snapshot) => {
-        console.log("파이어베이스에서 데이터 가져왔습니다!!");
-        let tip = snapshot.val();
-        getLocation();
-        setState(tip);
-  
-      });
 
+
+      firebase_db
+        .ref("/tip")
+        .once("value")
+        .then((snapshot) => {
+          console.log("파이어베이스에서 데이터 가져왔습니다!!");
+          let tip = snapshot.val();
+          getLocation();
+          setState(tip);
+    
+        });
+   
    
     //조건 셋팅 장소
 
