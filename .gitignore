@@ -54,6 +54,5 @@ buck-out/
 web-build/
 dist/
 
-
-src/data.json
 src/firebaseConfig.js
+src/data.json
