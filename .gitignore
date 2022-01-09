@@ -55,5 +55,5 @@ web-build/
 dist/
 
 
-src/firebaseConfig.js
 src/data.json
+src/firebaseConfig.js
