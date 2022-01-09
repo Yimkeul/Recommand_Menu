@@ -18,5 +18,7 @@ if (!firebase.apps.length) {
   firebase.initializeApp(firebaseConfig);
 }
 
+
+
 export const firebase_db= firebase.database()
 
